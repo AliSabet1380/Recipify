@@ -7,7 +7,7 @@ export const Footer = () => {
     <footer className="w-full flex flex-col items-center justify-center space-y-5 pb-20">
       <HeaderLogo />
       <span className="text-center text-sm text-neutral-500">
-        ©️ This Website created by Ali Sabet as parctic
+        ©️ This Website created by Ali Sabet as parctice
       </span>
       <span className="text-lg text-center">Oct 2024, Iran, Fars, Shirza</span>
       <div className="flex items-center space-x-5">

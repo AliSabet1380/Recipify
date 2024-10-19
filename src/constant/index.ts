@@ -47,7 +47,7 @@ export const techs = [
   {
     href: "https://tanstack.com",
     title: "Tanstack react-query",
-    desc: "To Manage querys and stage manager",
+    desc: "To Manage querys and state manager",
     svg: "react-query.svg",
   },
   {
