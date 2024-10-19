@@ -14,9 +14,11 @@ import {
 } from "@/features/auth/components/signup-form";
 
 import { useSignin } from "@/features/auth/api/use-signin";
+import { useSignup } from "../api/use-signup";
 
 export const AuthForm = () => {
   const { mutate: signinMutation, isPending: signinPending } = useSignin();
+  const { mutate: signupMutation, isPending: signupPending } = useSignup();
 
   return (
     <div className=" w-full h-full grid grid-cols-1 lg:grid-cols-2 bg-white text-black">
@@ -47,7 +49,12 @@ export const AuthForm = () => {
             />
           </TabsContent>
           <TabsContent className="w-96 min-h-[400px] h-fit" value="sign-up">
-            <SignupForm onSubmit={() => {}} />
+            <SignupForm
+              disabled={signupPending}
+              onSubmit={(formValues: SignupFormValues) => {
+                signupMutation(formValues);
+              }}
+            />
           </TabsContent>
         </Tabs>
       </div>
