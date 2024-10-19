@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { cookies } from "next/headers";
 import { Hono } from "hono";
 import { eq, sql } from "drizzle-orm";
 import { zValidator } from "@hono/zod-validator";
@@ -8,7 +8,6 @@ import { InsertUserSchema, recipes, users } from "@/db/schema";
 
 import { coparePassword, createHashPassword } from "@/lib/bcrypt";
 import { createSession, deleteSession, verifySession } from "@/lib/cookie";
-import { cookies } from "next/headers";
 
 const app = new Hono()
   .get(
@@ -29,10 +28,6 @@ const app = new Hono()
           avatar: users.avatar,
           createdAt: users.createdAt,
           updatedAt: users.updatedAt,
-          recipes:
-            sql`(SELECT json_agg(recipes) FROM ${recipes} WHERE ${recipes.authorId} = ${users.id})`.as(
-              "recipes"
-            ),
         })
         .from(users)
         .leftJoin(recipes, eq(users.id, recipes.authorId))
@@ -88,8 +83,6 @@ const app = new Hono()
     ),
     async (c) => {
       const { email, password } = c.req.valid("json");
-
-      console.log(email);
 
       const [data] = await db
         .select()

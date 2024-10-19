@@ -33,6 +33,7 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
     <>
       {!user && (
         <Button
+          asChild
           variant={"ghost"}
           className="text-white hover:text-white hover:bg-white/10"
         >

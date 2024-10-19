@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import { InferRequestType, InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -12,7 +11,6 @@ type Req = InferRequestType<
 type Res = InferResponseType<(typeof client.api.auth)["sign-up"]["$post"], 201>;
 
 export const useSignup = () => {
-  const router = useRouter();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const mutate = useMutation<Res, Error, Req>({
@@ -22,12 +20,14 @@ export const useSignup = () => {
       if (!response.ok) throw new Error((await response.json()).error);
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
       toast({
         description: "Sign in successfully",
       });
-      router.push("/dashboard");
+
+      localStorage.setItem("user", JSON.stringify(data.data));
+      window.location.reload();
     },
     onError: (error) => {
       toast({

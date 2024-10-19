@@ -1,3 +1,5 @@
+"use client";
+
 import { Header } from "@/components/header/header";
 import { Footer } from "@/components/landing/footer";
 import { GetStart } from "@/components/landing/get-start";

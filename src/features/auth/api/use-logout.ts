@@ -1,12 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/lib/hono";
-import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
 export const useLogout = () => {
   const { toast } = useToast();
-  const router = useRouter();
+
   const queryClinet = useQueryClient();
   const mutation = useMutation({
     mutationFn: async () => {
@@ -14,11 +13,12 @@ export const useLogout = () => {
       if (!response.ok) throw new Error("Fail to logout");
     },
     onSuccess: () => {
-      queryClinet.invalidateQueries({ queryKey: ["user"] });
       toast({
         description: "Logout successfully",
       });
-      router.push("/");
+      localStorage.removeItem("user");
+      queryClinet.invalidateQueries({ queryKey: ["user"] });
+      window.location.reload();
     },
     onError: (error) => {
       toast({

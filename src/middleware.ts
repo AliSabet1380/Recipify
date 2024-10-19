@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { decrypt, verifySession } from "./lib/cookie";
+import { decrypt } from "./lib/cookie";
 import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = async (req: NextRequest) => {
@@ -15,7 +15,7 @@ export const middleware = async (req: NextRequest) => {
   const decoded = await decrypt(session);
 
   if (isProtected && !decoded?.userId)
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
+    return NextResponse.redirect(new URL("/", req.nextUrl));
 
   if (isPublic && decoded?.userId)
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));

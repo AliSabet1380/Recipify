@@ -22,12 +22,14 @@ export const useSignin = () => {
       if (!response.ok) throw new Error((await response.json()).error);
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
       toast({
         description: "Sign in successfully",
       });
       router.push("/dashboard");
+
+      localStorage.setItem("user", JSON.stringify(data.data));
     },
     onError: (error) => {
       toast({
