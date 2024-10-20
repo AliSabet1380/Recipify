@@ -16,8 +16,8 @@ export const useLogout = () => {
       toast({
         description: "Logout successfully",
       });
-      localStorage.removeItem("user");
       queryClinet.invalidateQueries({ queryKey: ["user"] });
+
       window.location.reload();
     },
     onError: (error) => {

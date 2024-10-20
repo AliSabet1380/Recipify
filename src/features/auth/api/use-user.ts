@@ -6,12 +6,11 @@ import { client } from "@/lib/hono";
 type Res = InferResponseType<typeof client.api.auth.me.$get, 200>["data"];
 
 export const useUser = () => {
-  const localData = localStorage.getItem("user");
-  const initialData = localData && JSON.parse(localData);
-
   const query = useQuery<Res, Error>({
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
     queryKey: ["user"],
-    // enabled: !!initialData,
     staleTime: 2 * 60 * 60 * 1000,
     gcTime: 2 * 60 * 60 * 1000,
     queryFn: async () => {

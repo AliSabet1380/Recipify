@@ -28,8 +28,6 @@ export const useSignin = () => {
         description: "Sign in successfully",
       });
       router.push("/dashboard");
-
-      localStorage.setItem("user", JSON.stringify(data.data));
     },
     onError: (error) => {
       toast({
