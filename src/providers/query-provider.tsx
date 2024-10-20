@@ -10,7 +10,8 @@ const makeQueryClient = () =>
   new QueryClient({
     defaultOptions: {
       queries: {
-        retry: false,
+        retryDelay: 100,
+        retry: 1,
         staleTime: 2 * 60 * 60 * 1000,
         gcTime: 2 * 60 * 60 * 1000,
       },

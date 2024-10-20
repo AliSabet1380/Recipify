@@ -6,7 +6,6 @@ import { QueryProvider } from "@/providers/query-provider";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
-import { MainProvider } from "@/providers/main-provider";
 
 const nunito = Nunito({
   weight: ["200", "300", "400", "500", "600", "700"],
@@ -30,9 +29,7 @@ export default function RootLayout({
         className={`${nunito.className} antialiased bg-zinc-900 text-white`}
       >
         <Toaster />
-        <QueryProvider>
-          <MainProvider>{children}</MainProvider>
-        </QueryProvider>
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
