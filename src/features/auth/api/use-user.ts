@@ -11,7 +11,7 @@ export const useUser = () => {
 
   const query = useQuery<Res, Error>({
     queryKey: ["user"],
-    enabled: !!initialData,
+    // enabled: !!initialData,
     staleTime: 2 * 60 * 60 * 1000,
     gcTime: 2 * 60 * 60 * 1000,
     queryFn: async () => {
