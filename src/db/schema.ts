@@ -1,16 +1,28 @@
 import { relations } from "drizzle-orm";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { pgTable, uuid, text, timestamp } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import {
+  pgTable,
+  uuid,
+  text,
+  timestamp,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
 
-export const users = pgTable("users", {
-  id: uuid().primaryKey().defaultRandom(),
-  email: text().notNull().unique(),
-  username: text().notNull(),
-  avatar: text().notNull().default("/no-avatar.png"),
-  password: text().notNull(),
-  createdAt: timestamp().notNull().defaultNow(),
-  updatedAt: timestamp().notNull().defaultNow(),
-});
+export const users = pgTable(
+  "users",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    email: text().notNull().unique(),
+    username: text().notNull(),
+    avatar: text().notNull().default("/no-avatar.png"),
+    password: text().notNull(),
+    createdAt: timestamp().notNull().defaultNow(),
+    updatedAt: timestamp().notNull().defaultNow(),
+  },
+  (table) => ({
+    email_index: uniqueIndex("email_index").on(table.email),
+  })
+);
 
 export const recipes = pgTable("recipes", {
   id: uuid().primaryKey().defaultRandom(),

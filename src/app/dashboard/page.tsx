@@ -58,22 +58,10 @@ const Dashboard = () => {
           </div>
           <div className="flex items-center justify-center mt-20">
             <div className="w-full grid grid-cols-1 lg:grid-cols-3 px-10 gap-10">
-              {dummyData.map((data) => (
-                <div
-                  key={data.desc}
-                  className="flex flex-col items-center justify-center space-y-4 rounded-3xl p-3 md:p-8 bg-white/45 backdrop-blur transition hover:scale-[1.02] hover:bg-white/30 "
-                >
-                  <Image
-                    src={data.coverImg}
-                    alt="imge"
-                    width={100}
-                    height={100}
-                    className="rounded-full"
-                  />
-                  <h2 className="text-lg text-neutral-700">{data.title}</h2>
-                  <span className="text-sm text-neutral-700">{data.desc}</span>
-                </div>
-              ))}
+              {/* {user?.recipes.length === 0 && <p>Empty</p>}
+              {user?.recipes.map((recipe) => (
+                <div key={recipe.id}>{recipe.id}</div>
+              ))} */}
             </div>
           </div>
         </div>

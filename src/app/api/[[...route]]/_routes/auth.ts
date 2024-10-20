@@ -28,11 +28,14 @@ const app = new Hono()
           avatar: users.avatar,
           createdAt: users.createdAt,
           updatedAt: users.updatedAt,
+          recipesId: sql``,
         })
         .from(users)
         .leftJoin(recipes, eq(users.id, recipes.authorId))
         .where(eq(users.id, payload.userId));
       if (!data) return c.json({ error: "not found" }, 404);
+
+      console.log(data);
 
       return c.json({ data }, 200);
     }
