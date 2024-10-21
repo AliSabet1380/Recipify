@@ -20,22 +20,20 @@ const app = new Hono()
       const payload = await verifySession(session);
       if (!payload) return c.json({ error: "unauthorized" }, 401);
 
-      const [data] = await db
-        .select({
-          id: users.id,
-          username: users.username,
-          email: users.email,
-          avatar: users.avatar,
-          createdAt: users.createdAt,
-          updatedAt: users.updatedAt,
-          recipesId: sql``,
-        })
-        .from(users)
-        .leftJoin(recipes, eq(users.id, recipes.authorId))
-        .where(eq(users.id, payload.userId));
-      if (!data) return c.json({ error: "not found" }, 404);
-
-      console.log(data);
+      const data = await db.query.users.findFirst({
+        where: eq(users.id, payload.userId),
+        columns: {
+          avatar: true,
+          id: true,
+          createdAt: true,
+          email: true,
+          updatedAt: true,
+          username: true,
+        },
+        with: {
+          recipes: true,
+        },
+      });
 
       return c.json({ data }, 200);
     }
