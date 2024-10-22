@@ -61,6 +61,7 @@ export const createSession = async (
 
   cookies().set("session", session, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
     expires: expiresAt,
   });
 
@@ -91,6 +92,7 @@ export const updateSession = async (): Promise<void> => {
 
   cookies().set("session", newSession, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
     expires: expiresAt,
   });
 };

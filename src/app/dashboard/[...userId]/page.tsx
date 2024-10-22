@@ -43,10 +43,7 @@ const Dashboard = ({
           </div>
           <div className="flex items-center justify-center mt-20">
             <div className="w-full grid grid-cols-1 lg:grid-cols-3 px-10 gap-10">
-              {/* {user?.recipes.length === 0 && <p>Empty</p>}
-              {user?.recipes.map((recipe) => (
-                <div key={recipe.id}>{recipe.id}</div>
-              ))} */}
+              {/* Render Recipes */}
             </div>
           </div>
         </div>

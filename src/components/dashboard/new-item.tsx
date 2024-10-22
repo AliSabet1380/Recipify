@@ -1,6 +1,6 @@
 "use client";
 
-import { useNewItem } from "@/hooks/use-new-item";
+import { useNewItem } from "@/features/recipes/hooks/use-new-item";
 
 import { Button } from "@/components/ui/button";
 import { NewItemSheet } from "@/features/recipes/components/new-item-sheet";

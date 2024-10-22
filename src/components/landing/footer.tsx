@@ -14,12 +14,6 @@ export const Footer = () => {
         <Link href={"https://github.com/AliSabet1380"}>
           <Image src={"/github.svg"} alt="github" width={25} height={25} />
         </Link>
-        <Link href={"https://github.com/AliSabet1380"}>
-          <Image src={"/instagram.svg"} alt="insta" width={25} height={25} />
-        </Link>
-        <Link href={"https://github.com/AliSabet1380"}>
-          <Image src={"/discord.svg"} alt="discord" width={25} height={25} />
-        </Link>
       </div>
     </footer>
   );

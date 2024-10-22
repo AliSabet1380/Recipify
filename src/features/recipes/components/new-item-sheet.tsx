@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useNewItem } from "@/hooks/use-new-item";
+import { useNewItem } from "@/features/recipes/hooks/use-new-item";
 import { NewItemForm } from "./new-item-form";
 
 export const NewItemSheet = () => {
