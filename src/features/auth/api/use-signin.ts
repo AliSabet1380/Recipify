@@ -27,7 +27,7 @@ export const useSignin = () => {
       toast({
         description: "Sign in successfully",
       });
-      router.push("/dashboard");
+      router.push(`/dashboard/${data.data.id}`);
     },
     onError: (error) => {
       toast({

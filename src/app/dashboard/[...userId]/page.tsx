@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { BellRing, Loader2, Settings } from "lucide-react";
 
 import { AppSidebar } from "@/components/app-sidebar";
@@ -9,29 +10,9 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-
 import { NewItem } from "@/components/dashboard/new-item";
 
 import { useUser } from "@/features/auth/api/use-user";
-import Image from "next/image";
-
-const dummyData = [
-  {
-    title: "Something",
-    desc: "Something else",
-    coverImg: "/logo.svg",
-  },
-  {
-    title: "Something",
-    desc: "Something else",
-    coverImg: "/logo.svg",
-  },
-  {
-    title: "Salad Bar",
-    desc: "a full healthy salad that you can create with so simple ing in your kichen",
-    coverImg: "/landing-1.png",
-  },
-];
 
 const Dashboard = ({
   params: { userId },

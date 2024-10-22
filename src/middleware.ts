@@ -3,13 +3,12 @@ import { decrypt } from "./lib/cookie";
 import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = async (req: NextRequest) => {
-  const protectedRoutes = ["/dashboard"];
   const publicRoutes = ["/login"];
 
   const path = req.nextUrl.pathname;
 
   const isPublic = publicRoutes.includes(path);
-  const isProtected = protectedRoutes.includes(path);
+  const isProtected = path.startsWith("/dashboard/");
 
   const session = cookies().get("session")?.value;
   const decoded = await decrypt(session);
