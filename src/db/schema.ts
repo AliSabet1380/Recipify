@@ -33,6 +33,7 @@ export const recipes = pgTable("recipes", {
     .notNull()
     .references(() => users.id),
   recipe: text().notNull(),
+  coverImg: text().notNull().default("/no-cover.png"),
   createdAt: timestamp().notNull().defaultNow(),
 });
 
@@ -48,4 +49,4 @@ export const recipeRelations = relations(recipes, ({ one }) => ({
 
 export const InsertUserSchema = createInsertSchema(users);
 export const InsertRecipeSchema = createInsertSchema(recipes);
-export type User = typeof users.$inferSelect;
+export type Recipe = typeof recipes.$inferSelect;

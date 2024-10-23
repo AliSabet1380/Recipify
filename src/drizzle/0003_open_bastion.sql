@@ -1,0 +1,1 @@
+ALTER TABLE "recipes" ADD COLUMN "coverImg" text DEFAULT '/no-cover.png' NOT NULL;

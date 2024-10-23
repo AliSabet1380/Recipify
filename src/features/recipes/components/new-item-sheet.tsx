@@ -8,7 +8,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useNewItem } from "@/features/recipes/hooks/use-new-item";
-import { NewItemForm } from "./new-item-form";
 
 export const NewItemSheet = () => {
   const { isOpen, close } = useNewItem();
@@ -20,7 +19,7 @@ export const NewItemSheet = () => {
           <SheetTitle>New Recipe</SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <NewItemForm onSubmit={() => {}} />
+        {/* Form Here */}
       </SheetContent>
     </Sheet>
   );
