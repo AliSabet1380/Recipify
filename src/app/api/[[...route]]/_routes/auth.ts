@@ -8,6 +8,7 @@ import { InsertUserSchema, recipes, users } from "@/db/schema";
 
 import { coparePassword, createHashPassword } from "@/lib/bcrypt";
 import { createSession, deleteSession, verifySession } from "@/lib/cookie";
+import { NextResponse } from "next/server";
 
 const app = new Hono()
   .get(
@@ -34,6 +35,10 @@ const app = new Hono()
           recipes: true,
         },
       });
+      if (!data) {
+        await deleteSession();
+        return c.json({ error: "session not valid" }, 401);
+      }
 
       return c.json({ data }, 200);
     }

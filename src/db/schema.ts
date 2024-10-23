@@ -32,6 +32,7 @@ export const recipes = pgTable("recipes", {
   authorId: uuid()
     .notNull()
     .references(() => users.id),
+  recipe: text().notNull(),
   createdAt: timestamp().notNull().defaultNow(),
 });
 

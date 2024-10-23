@@ -15,6 +15,13 @@
       "when": 1729434104746,
       "tag": "0001_simple_leader",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729697615816,
+      "tag": "0002_stormy_green_goblin",
+      "breakpoints": true
     }
   ]
 }
