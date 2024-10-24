@@ -89,15 +89,17 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
 
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={"https://github.com/AliSabet1380"}>Github</Link>
-              <DropdownMenuShortcut>
-                <Image
-                  src="/github-black.svg"
-                  alt="github"
-                  width={15}
-                  height={15}
-                />
-              </DropdownMenuShortcut>
+              <Link href={"https://github.com/AliSabet1380"}>
+                <p>Github</p>
+                <DropdownMenuShortcut>
+                  <Image
+                    src="/github-black.svg"
+                    alt="github"
+                    width={15}
+                    height={15}
+                  />
+                </DropdownMenuShortcut>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem disabled>
               LinkedIn
