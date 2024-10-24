@@ -11,15 +11,15 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { NewRecipe } from "@/components/dashboard/new-recipe";
-
-import { useUser } from "@/features/auth/api/use-user";
+import { useRecipes } from "@/features/recipes/api/use-recipes";
+import { Recipe } from "@/components/dashboard/recipe";
 
 const Dashboard = ({
   params: { userId },
 }: {
   params: { userId: string[] };
 }) => {
-  const { data: user, isLoading } = useUser();
+  const { data: recipes, isLoading } = useRecipes(userId[0]);
 
   return (
     <SidebarProvider>
@@ -36,15 +36,15 @@ const Dashboard = ({
             <User loaderColor="black" />
           </div>
         </header>
-        <div className="w-full h-full bg-zinc-300 p-10">
-          <div className="flex items-center justify-between">
-            <h2 className="text-black text-xl font-medium">All your recipes</h2>
+        <div className="w-full h-full bg-zinc-300 p-3 lg:p-7 overflow-y-scroll ">
+          <div className="flex items-center justify-between p-3">
+            <div className="bg-white shadow-md border rounded-md flex items-center justify-center p-2">
+              <p className="text-black font-bold">All recipes</p>
+            </div>
             <NewRecipe userId={userId[0]} />
           </div>
-          <div className="flex items-center justify-center mt-20">
-            <div className="w-full grid grid-cols-1 lg:grid-cols-3 px-10 gap-10">
-              {/* Render Recipes */}
-            </div>
+          <div className="flex items-center justify-center mt-10  px-4">
+            <Recipe recipes={recipes} isLoading={isLoading} />
           </div>
         </div>
       </SidebarInset>

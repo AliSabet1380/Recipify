@@ -1,0 +1,70 @@
+"use client";
+
+import { Recipe as RecipesType } from "@/db/schema";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+
+interface RecipeProps {
+  recipes:
+    | {
+        id: string;
+        createdAt: string;
+        desc: string;
+        title: string;
+        ings: string[];
+        authorId: string;
+        recipe: string;
+        coverImg: string;
+        author: {
+          username: string;
+        };
+      }[]
+    | undefined;
+  isLoading: boolean;
+}
+
+export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
+  return (
+    <div className="w-full mx-auto flex flex-col items-center justify-center  lg:grid lg:grid-cols-3 gap-10">
+      {isLoading && <Loader2 className="size-5 animate-spin" />}
+      {!isLoading && recipes?.length === 0 && <p className="">no recipes</p>}
+      {!isLoading &&
+        recipes?.map((recipe) => (
+          <div
+            className="flex flex-col items-center lg:w-64 lg:h-80 h-[400px] w-96 rounded-lg p-2 bg-white/60 backdrop-blur transition hover:scale-[1.009] hover:bg-white/50"
+            key={recipe.id}
+          >
+            <Image
+              src={recipe.coverImg}
+              alt={recipe.title}
+              width={450}
+              height={450}
+              className="rounded-md"
+            />
+            <div className="p-1 w-full flex flex-col items-start space-y-1">
+              <h3 className="text-xl font-semibold">{recipe.title}</h3>
+              <span className="text-sm text-neutral-700 font-medium">
+                {recipe.desc}
+              </span>
+              <span className="hidden lg:inline w-full text-xs text-neutral-700 text-wrap">
+                {recipe.recipe.slice(0, 40)}{" "}
+                {recipe.recipe.length > 40 && "..."}
+              </span>
+              <span className="lg:hidden inline w-full text-xs text-neutral-700 text-wrap">
+                {recipe.recipe.slice(0, 120)}{" "}
+                {recipe.recipe.length > 120 && "..."}
+              </span>
+            </div>
+            <div className="w-full flex flex-wrap items-center gap-1 pt-2">
+              {recipe.ings.slice(0, 5).map((ing) => (
+                <div className="bg-slate-700 p-2 rounded-full text-xs text-white font-medium">
+                  {ing}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+    </div>
+  );
+};
