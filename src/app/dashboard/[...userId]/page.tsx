@@ -36,14 +36,14 @@ const Dashboard = ({
             <User loaderColor="black" />
           </div>
         </header>
-        <div className="w-full h-full bg-zinc-300 p-3 lg:p-7 overflow-y-scroll ">
+        <div className="w-full h-full bg-zinc-300 p-3 lg:p-7 ">
           <div className="flex items-center justify-between p-3">
             <div className="bg-white shadow-md border rounded-md flex items-center justify-center p-2">
               <p className="text-black font-bold">All recipes</p>
             </div>
             <NewRecipe userId={userId[0]} />
           </div>
-          <div className="flex items-center justify-center mt-10  px-4">
+          <div className="flex items-center justify-center mt-10 pb-20 px-4">
             <Recipe recipes={recipes} isLoading={isLoading} />
           </div>
         </div>

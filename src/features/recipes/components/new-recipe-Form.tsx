@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { useFormStatus } from "react-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
@@ -32,11 +32,11 @@ export const NewRecipeForm = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const { excute, isLoading } = useAction(createNewRecipe, {
     onSuccess: (data) => {
-      // invalida Query
-      //   queryClient.invalidateQueries({ queryKey: ["own-recipes"] });
+      queryClient.invalidateQueries({ queryKey: ["own-recipes"] });
       toast({
         description: "recipe created",
       });
+      close();
     },
     onError: (error) => {
       toast({
@@ -127,7 +127,7 @@ export const NewRecipeForm = () => {
           onClick={onAddIng}
           variant={"link"}
         >
-          +
+          <Plus className="size-3" />
         </Button>
       </div>
       <Textarea

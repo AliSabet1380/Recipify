@@ -32,16 +32,17 @@ export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
       {!isLoading &&
         recipes?.map((recipe) => (
           <div
-            className="flex flex-col items-center lg:w-64 lg:h-80 h-[400px] w-96 rounded-lg p-2 bg-white/60 backdrop-blur transition hover:scale-[1.009] hover:bg-white/50"
+            className="flex flex-col items-center lg:w-64 lg:h-80 h-[400px] w-[350px] rounded-lg p-2 bg-white/60 backdrop-blur transition hover:scale-[1.009] hover:bg-white/50"
             key={recipe.id}
           >
-            <Image
-              src={recipe.coverImg}
-              alt={recipe.title}
-              width={450}
-              height={450}
-              className="rounded-md"
-            />
+            <div className="relative w-full h-40">
+              <Image
+                src={recipe.coverImg}
+                alt={recipe.title}
+                fill
+                className="rounded-md"
+              />
+            </div>
             <div className="p-1 w-full flex flex-col items-start space-y-1">
               <h3 className="text-xl font-semibold">{recipe.title}</h3>
               <span className="text-sm text-neutral-700 font-medium">
@@ -57,11 +58,16 @@ export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
               </span>
             </div>
             <div className="w-full flex flex-wrap items-center gap-1 pt-2">
-              {recipe.ings.slice(0, 5).map((ing) => (
+              {recipe.ings.slice(0, 2).map((ing) => (
                 <div className="bg-slate-700 p-2 rounded-full text-xs text-white font-medium">
                   {ing}
                 </div>
               ))}
+              {recipe.ings.length > 3 && (
+                <div className="bg-slate-700 p-2 rounded-full text-xs text-white font-bold">
+                  more ...
+                </div>
+              )}
             </div>
           </div>
         ))}
