@@ -10,7 +10,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { NewItem } from "@/components/dashboard/new-item";
+import { NewItem } from "@/components/dashboard/new-recipe";
 
 import { useUser } from "@/features/auth/api/use-user";
 

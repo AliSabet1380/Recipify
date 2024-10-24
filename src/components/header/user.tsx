@@ -59,7 +59,7 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
                   className="hover:cursor-pointer"
                   asChild
                 >
-                  <Link href={"/dashboard"}>Dashboard</Link>
+                  <Link href={`/dashboard/${user.id}`}>Dashboard</Link>
                 </Button>
               </DropdownMenuItem>
             </DropdownMenuGroup>

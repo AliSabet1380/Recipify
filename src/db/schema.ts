@@ -28,7 +28,7 @@ export const recipes = pgTable("recipes", {
   id: uuid().primaryKey().defaultRandom(),
   title: text().notNull(),
   desc: text().notNull(),
-  ing: text().array().notNull().default([]),
+  ings: text().array().notNull().default([]),
   authorId: uuid()
     .notNull()
     .references(() => users.id),

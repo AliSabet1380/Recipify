@@ -1,16 +1,16 @@
 "use client";
 
-import { useNewItem } from "@/features/recipes/hooks/use-new-item";
+import { useNewItem } from "@/features/recipes/hooks/use-new-recipe";
 
 import { Button } from "@/components/ui/button";
-import { NewItemSheet } from "@/features/recipes/components/new-item-sheet";
+import { NewRecipeSheet } from "@/features/recipes/components/new-recipe-sheet";
 
 export const NewItem = ({ userId }: { userId: string }) => {
   const { open } = useNewItem();
 
   return (
     <>
-      <NewItemSheet />
+      <NewRecipeSheet />
       <Button onClick={() => open(userId)}>Add New+</Button>
     </>
   );

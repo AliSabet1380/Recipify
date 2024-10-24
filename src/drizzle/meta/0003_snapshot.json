@@ -1,6 +1,6 @@
 {
-  "id": "85e372e3-002b-443a-b222-631f684ac135",
-  "prevId": "a4eaf403-3061-4de8-afda-3835b4d4529f",
+  "id": "710c25bd-16a1-473b-9fa9-9164634b79f2",
+  "prevId": "85e372e3-002b-443a-b222-631f684ac135",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -27,8 +27,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "ing": {
-          "name": "ing",
+        "ings": {
+          "name": "ings",
           "type": "text[]",
           "primaryKey": false,
           "notNull": true,
