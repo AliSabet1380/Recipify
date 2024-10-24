@@ -63,7 +63,7 @@ export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
               </span>
             </div>
             <div className="w-full flex flex-wrap items-center gap-1 pt-2">
-              {recipe.ings.slice(0, 2).map((ing) => (
+              {recipe.ings.slice(0, 3).map((ing) => (
                 <div
                   key={ing}
                   className="bg-slate-700 p-2 rounded-full text-xs text-white font-medium"
