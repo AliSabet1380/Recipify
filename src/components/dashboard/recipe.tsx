@@ -35,7 +35,7 @@ export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
             className="flex flex-col items-center lg:w-64 lg:h-80 h-[400px] w-[350px] rounded-lg p-2 bg-white/60 backdrop-blur transition hover:scale-[1.009] hover:bg-white/50"
             key={recipe.id}
           >
-            <div className="relative w-full h-40">
+            <div className="relative w-full  h-64 lg:h-40">
               <Image
                 src={recipe.coverImg}
                 alt={recipe.title}
