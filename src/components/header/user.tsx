@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Edit2, Loader2, LogOut } from "lucide-react";
+import { Edit, Loader2, LogOut, AppWindow, Settings } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -11,12 +11,14 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
 import { useUser } from "@/features/auth/api/use-user";
 import { useLogout } from "@/features/auth/api/use-logout";
+import Image from "next/image";
 
 interface UserProps {
   loaderColor?: "white" | "black";
@@ -43,56 +45,89 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
       {user && (
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarFallback className="text-black">
+            <Avatar className="cursor-pointer">
+              <AvatarFallback className="bg-gray-200 text-black">
                 {user.username.charAt(0)}
               </AvatarFallback>
               <AvatarImage src={user.avatar} alt={user.username} />
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-64">
-            <DropdownMenuLabel>Links</DropdownMenuLabel>
+
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Button
-                  variant={"ghost"}
-                  className="hover:cursor-pointer"
-                  asChild
+              <DropdownMenuItem>
+                <Link
+                  href={"/edit-profile"}
+                  className="w-full flex items-center justify-between"
                 >
-                  <Link href={`/dashboard/${user.id}`}>Dashboard</Link>
-                </Button>
+                  <p>Profile</p>
+                  <DropdownMenuShortcut>
+                    <Edit />
+                  </DropdownMenuShortcut>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link
+                  href={`/dashboard/${user.id}`}
+                  className="w-full flex items-center justify-between"
+                >
+                  <p>Dashboard</p>
+                  <DropdownMenuShortcut>
+                    <AppWindow />
+                  </DropdownMenuShortcut>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem disabled>
+                Settings
+                <DropdownMenuShortcut>
+                  <Settings />
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator className="bg-zinc-400" />
-            <DropdownMenuLabel>User</DropdownMenuLabel>
-            <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Button
-                  asChild
-                  className="w-full hover:cursor-pointer"
-                  variant={"ghost"}
-                >
-                  <Link href={"/edit-profile"} className="">
-                    <Edit2 className="size-4" />
-                    <span>Edit</span>
-                  </Link>
-                </Button>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-zinc-400" />
-              <DropdownMenuItem asChild>
-                <Button
-                  disabled={isPending}
-                  onClick={() => {
-                    logout();
-                  }}
-                  className="w-full  hover:cursor-pointer"
-                  variant={"ghost"}
-                >
-                  <LogOut className="size-4" />
-                  <span>LogOut</span>
-                </Button>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link href={"https://github.com/AliSabet1380"}>Github</Link>
+              <DropdownMenuShortcut>
+                <Image
+                  src="/github-black.svg"
+                  alt="github"
+                  width={15}
+                  height={15}
+                />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem disabled>
+              LinkedIn
+              <DropdownMenuShortcut>
+                <Image
+                  src={"/linkedin.svg"}
+                  alt="github"
+                  width={15}
+                  height={15}
+                />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem disabled>
+              Twitter
+              <DropdownMenuShortcut>
+                <Image
+                  src={"/twitter.svg"}
+                  alt="github"
+                  width={15}
+                  height={15}
+                />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => logout()}>
+              Log out
+              <DropdownMenuShortcut>
+                <LogOut />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )}

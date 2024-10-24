@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
-import { BellRing, Loader2, Settings } from "lucide-react";
+
+import { BellRing, Settings } from "lucide-react";
 
 import { AppSidebar } from "@/components/app-sidebar";
 import { User } from "@/components/header/user";
@@ -23,7 +23,7 @@ const Dashboard = ({
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar userid={userId[0]} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 justify-between">
           <div className="flex items-center space-x-3">

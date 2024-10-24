@@ -15,6 +15,8 @@ type Props = {
     | "ghost"
     | "link"
     | "default";
+  size?: "sm" | "default" | "lg" | "icon";
+  onClick?: () => void;
 };
 
 export const FormButton = ({
@@ -23,11 +25,13 @@ export const FormButton = ({
   disabled,
   children,
   variant = "default",
+  onClick,
 }: Props) => {
   const { pending } = useFormStatus();
 
   return (
     <Button
+      onClick={onClick}
       type={type}
       className={cn("", className)}
       disabled={pending || disabled}

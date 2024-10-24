@@ -7,9 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, ElementRef, useRef, useState } from "react";
 
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { FormInput } from "@/components/form/form-input";
 import { FormButton } from "@/components/form/form-button";
 
@@ -18,6 +16,7 @@ import { useAction } from "@/hooks/use-action";
 import { createNewRecipe } from "@/actions/create-recipe";
 
 import { useNewRecipe } from "@/features/recipes/hooks/use-new-recipe";
+import { FormTextarea } from "@/components/form/form-textarea";
 
 export const NewRecipeForm = () => {
   const queryClient = useQueryClient();
@@ -121,21 +120,21 @@ export const NewRecipeForm = () => {
           id="ing"
           ref={ingInputRef}
         />
-        <Button
+        <FormButton
           type="button"
           disabled={isLoading || pending}
           onClick={onAddIng}
           variant={"link"}
         >
           <Plus className="size-3" />
-        </Button>
+        </FormButton>
       </div>
-      <Textarea
+      <FormTextarea
         disabled={isLoading || pending}
         placeholder="Recipe"
         rows={5}
         className="w-full border resize-none"
-        name="recipe"
+        id="recipe"
       />
       <input
         hidden
@@ -157,7 +156,7 @@ export const NewRecipeForm = () => {
       )}
       <div className="w-full flex items-center justify-end space-x-5">
         {preview && (
-          <Button
+          <FormButton
             size={"sm"}
             type="button"
             variant={"outline"}
@@ -165,7 +164,7 @@ export const NewRecipeForm = () => {
             onClick={onRemove}
           >
             Remove Image
-          </Button>
+          </FormButton>
         )}
         <Button
           size={"sm"}

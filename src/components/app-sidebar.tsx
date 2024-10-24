@@ -42,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarHeader>
         <div className="w-full flex items-center justify-center pt-2">
-          <HeaderLogo url={"/dashboard"} />
+          <HeaderLogo url={`/`} />
         </div>
         <hr className="mt-3" />
       </SidebarHeader>
@@ -57,7 +57,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <div key={item.title}>
                     <SidebarMenuItem className="p-2">
                       <SidebarMenuButton asChild>
-                        <a href={item.url}>{item.title}</a>
+                        <a
+                          href={
+                            item.title === "Dashboard"
+                              ? `${item.url}/${props.userid}`
+                              : item.url
+                          }
+                        >
+                          {item.title}
+                        </a>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarSeparator />

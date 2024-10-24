@@ -1,9 +1,8 @@
 "use client";
 
-import { Recipe as RecipesType } from "@/db/schema";
-import { Loader2 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 interface RecipeProps {
   recipes:
@@ -31,7 +30,8 @@ export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
       {!isLoading && recipes?.length === 0 && <p className="">no recipes</p>}
       {!isLoading &&
         recipes?.map((recipe) => (
-          <div
+          <Link
+            href={`/dashboard/recipe/${recipe.id}`}
             className="flex flex-col items-center lg:w-64 lg:h-80 h-[400px] w-[350px] rounded-lg p-2 bg-white/60 backdrop-blur transition hover:scale-[1.009] hover:bg-white/50"
             key={recipe.id}
           >
@@ -72,7 +72,7 @@ export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
                 </div>
               )}
             </div>
-          </div>
+          </Link>
         ))}
     </div>
   );
