@@ -25,14 +25,14 @@ interface RecipeProps {
 
 export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
   return (
-    <div className="w-full mx-auto flex flex-col items-center justify-center lg:grid lg:grid-cols-3 gap-y-10">
+    <div className="w-full mx-auto flex flex-col items-center justify-center lg:grid lg:grid-cols-4 gap-y-10">
       {isLoading && <Loader2 className="size-5 animate-spin" />}
       {!isLoading && recipes?.length === 0 && <p className="">no recipes</p>}
       {!isLoading &&
         recipes?.map((recipe) => (
           <Link
             href={`/dashboard/recipe/${recipe.id}`}
-            className="flex flex-col items-center lg:w-64 lg:h-80 h-[400px] w-[350px] rounded-lg p-2 bg-white/60 backdrop-blur transition hover:scale-[1.009] hover:bg-white/50"
+            className="flex flex-col items-center lg:w-64 lg:h-80 h-[400px] w-[350px] rounded-lg p-2 bg-white/60 transition hover:scale-[1.009] hover:bg-white/50"
             key={recipe.id}
           >
             <div className="relative w-full  h-64 lg:h-40">

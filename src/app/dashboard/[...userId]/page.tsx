@@ -32,6 +32,7 @@ const Dashboard = ({
       </div>
     );
 
+  if (!isLoading && !user) location.reload();
   const isAuthor = user?.id === userId[0];
 
   return (
