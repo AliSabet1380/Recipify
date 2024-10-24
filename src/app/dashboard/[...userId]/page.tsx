@@ -1,6 +1,6 @@
 "use client";
 
-import { BellRing, Loader2, Settings } from "lucide-react";
+import { BellRing, Settings } from "lucide-react";
 
 import { AppSidebar } from "@/components/app-sidebar";
 import { User } from "@/components/header/user";
@@ -14,27 +14,21 @@ import {
 import { NewRecipe } from "@/components/dashboard/new-recipe";
 import { Recipe } from "@/components/dashboard/recipe";
 
-import { useUser } from "@/features/auth/api/use-user";
 import { useRecipes } from "@/features/recipes/api/use-recipes";
+import { useUser } from "@/features/auth/api/use-user";
 
 const Dashboard = ({
   params: { userId },
 }: {
   params: { userId: string[] };
 }) => {
-  const { data: user, isLoading: userLoading } = useUser();
-  const { data: recipes, isLoading } = useRecipes(userId[0]);
+  const { data, isLoading: userLoading } = useUser();
+  const { data: recipes, isLoading: recipesLoading } = useRecipes(userId[0]);
 
-  if (isLoading)
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <Loading />
-      </div>
-    );
+  if (userLoading) return <Loading />;
+  if (!userLoading && !data) location.reload();
 
-  if (!isLoading && !user) location.reload();
-  const isAuthor = user?.id === userId[0];
-
+  const isAuthor = data?.id == userId[0];
   return (
     <SidebarProvider>
       <AppSidebar userid={userId[0]} />
@@ -58,7 +52,7 @@ const Dashboard = ({
             {isAuthor && <NewRecipe userId={userId[0]} />}
           </div>
           <div className="flex items-center justify-center mt-10 pb-20 px-4">
-            <Recipe recipes={recipes} isLoading={isLoading} />
+            <Recipe recipes={recipes} isLoading={recipesLoading} />
           </div>
         </div>
       </SidebarInset>

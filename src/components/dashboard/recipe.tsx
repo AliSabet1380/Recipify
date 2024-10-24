@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Loader2 } from "lucide-react";
+
+import { Loading } from "@/components/loading";
 
 interface RecipeProps {
   recipes:
@@ -26,8 +27,12 @@ interface RecipeProps {
 export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
   return (
     <div className="w-full mx-auto flex flex-col items-center justify-center lg:grid lg:grid-cols-4 gap-y-10">
-      {isLoading && <Loader2 className="size-5 animate-spin" />}
-      {!isLoading && recipes?.length === 0 && <p className="">no recipes</p>}
+      {isLoading && <Loading />}
+      {!isLoading && recipes?.length === 0 && (
+        <div className="w-full flex items-center justify-center mt-20">
+          no recipes
+        </div>
+      )}
       {!isLoading &&
         recipes?.map((recipe) => (
           <Link

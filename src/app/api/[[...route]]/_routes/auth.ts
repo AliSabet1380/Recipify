@@ -31,9 +31,6 @@ const app = new Hono()
           updatedAt: true,
           username: true,
         },
-        with: {
-          recipes: true,
-        },
       });
       if (!data) {
         await deleteSession();
