@@ -57,7 +57,7 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link
                   href={"/edit-profile"}
                   className="w-full flex items-center justify-between"
@@ -68,7 +68,7 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
                   </DropdownMenuShortcut>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link
                   href={`/dashboard/${user.id}`}
                   className="w-full flex items-center justify-between"
@@ -88,7 +88,7 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link href={"https://github.com/AliSabet1380"}>Github</Link>
               <DropdownMenuShortcut>
                 <Image
