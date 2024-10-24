@@ -6,18 +6,20 @@ import { recipes } from "@/db/schema";
 import { firebaseStorage } from "@/firebase/storage";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
+import { safeAction } from "@/actions/safe-action";
+import { CreateRecipeSchema } from "@/actions/create-recipe/schema";
 import { InputType, ReturnType } from "@/actions/create-recipe/types";
-import { safeAction } from "../safe-action";
-import { CreateRecipeSchema } from "./schema";
+import { FormSchema } from "@/actions/create-recipe/form-data-schema";
 
 const handler = async (validateData: InputType): Promise<ReturnType> => {
   const { ings, userId, formData } = validateData;
   const coverImg = formData.get("coverImg") as File;
-  const desc = formData.get("desc") as string;
-  const title = formData.get("title") as string;
-  const recipe = formData.get("recipe") as string;
 
-  // Todo: Valide desc, title and recipe to not be null
+  const parsedData = FormSchema.safeParse(Object.fromEntries(formData));
+  if (!parsedData.success) {
+    return { errors: parsedData.error.errors[0].message };
+  }
+  const { desc, recipe, title } = parsedData.data;
 
   if (!userId) return { errors: "userId Missed!" };
 

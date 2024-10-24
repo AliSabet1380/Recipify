@@ -10,28 +10,37 @@ import { ChangeEvent, ElementRef, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { FormInput } from "@/components/form/form-input";
+import { FormButton } from "@/components/form/form-button";
 
 import { useAction } from "@/hooks/use-action";
+
 import { createNewRecipe } from "@/actions/create-recipe";
-import { useNewItem } from "@/features/recipes/hooks/use-new-recipe";
+
+import { useNewRecipe } from "@/features/recipes/hooks/use-new-recipe";
 
 export const NewRecipeForm = () => {
+  const queryClient = useQueryClient();
   const formRef = useRef<ElementRef<"form">>(null);
   const fileInputRef = useRef<ElementRef<"input">>(null);
   const ingInputRef = useRef<ElementRef<"input">>(null);
-  const queryClient = useQueryClient();
 
   const { toast } = useToast();
-  const { userId } = useNewItem();
+  const { close, userId } = useNewRecipe();
   const { pending } = useFormStatus();
   const [ings, setIngs] = useState<string[]>([]);
   const [preview, setPreview] = useState<string | null>(null);
-  const { excute, isLoading, fieldErrors } = useAction(createNewRecipe, {
+  const { excute, isLoading } = useAction(createNewRecipe, {
     onSuccess: (data) => {
       // invalida Query
       //   queryClient.invalidateQueries({ queryKey: ["own-recipes"] });
       toast({
         description: "recipe created",
+      });
+    },
+    onError: (error) => {
+      toast({
+        description: error,
       });
     },
   });
@@ -56,6 +65,13 @@ export const NewRecipeForm = () => {
     ingInputRef.current.value = "";
   };
 
+  const onFilterIngs = (i: number) => {
+    const newIngs = ings.filter((_, idx) => {
+      return idx !== i;
+    });
+    setIngs(newIngs);
+  };
+
   const onSubmit = (formData: FormData) => {
     excute({ formData, ings, userId });
   };
@@ -66,15 +82,15 @@ export const NewRecipeForm = () => {
       action={onSubmit}
       className="w-full flex flex-col items-center space-y-3 text-black"
     >
-      <Input
+      <FormInput
         disabled={isLoading || pending}
-        name="title"
+        id="title"
         placeholder="Recipe title"
         className="w-full border-2"
       />
-      <Input
+      <FormInput
         disabled={isLoading || pending}
-        name="desc"
+        id="desc"
         placeholder="Recipe Description"
         className="w-full border-2"
       />
@@ -83,10 +99,15 @@ export const NewRecipeForm = () => {
           {ings.map((ing, i) => (
             <div
               key={i}
-              className=" px-3  flex items-center justify-between rounded-full bg-slate-800 text-white text-xs font-semibold"
+              className="w-fit px-3 flex items-center justify-between rounded-full bg-slate-800 text-white text-xs font-semibold"
             >
               {ing}
-              <Button type="button" size={"icon"} variant={"link"}>
+              <Button
+                onClick={() => onFilterIngs(i)}
+                type="button"
+                size={"sm"}
+                variant={"link"}
+              >
                 <X className="text-white size-2" />
               </Button>
             </div>
@@ -94,10 +115,10 @@ export const NewRecipeForm = () => {
         </div>
       )}
       <div className="w-full border rounded-md flex items-center justify-between px-1">
-        <Input
+        <FormInput
           disabled={isLoading || pending}
           placeholder="Enter Your ing"
-          name="ing"
+          id="ing"
           ref={ingInputRef}
         />
         <Button
@@ -156,7 +177,7 @@ export const NewRecipeForm = () => {
         </Button>
       </div>
 
-      <Button className="w-full">Create Recipe</Button>
+      <FormButton className="w-full">Create Recipe</FormButton>
     </form>
   );
 };

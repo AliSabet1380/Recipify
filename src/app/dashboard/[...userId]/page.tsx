@@ -10,7 +10,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { NewItem } from "@/components/dashboard/new-recipe";
+import { NewRecipe } from "@/components/dashboard/new-recipe";
 
 import { useUser } from "@/features/auth/api/use-user";
 
@@ -39,7 +39,7 @@ const Dashboard = ({
         <div className="w-full h-full bg-zinc-300 p-10">
           <div className="flex items-center justify-between">
             <h2 className="text-black text-xl font-medium">All your recipes</h2>
-            <NewItem userId={userId[0]} />
+            <NewRecipe userId={userId[0]} />
           </div>
           <div className="flex items-center justify-center mt-20">
             <div className="w-full grid grid-cols-1 lg:grid-cols-3 px-10 gap-10">
