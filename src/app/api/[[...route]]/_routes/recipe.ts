@@ -5,6 +5,8 @@ import { zValidator } from "@hono/zod-validator";
 
 import { db } from "@/db/drizzle";
 import { recipes } from "@/db/schema";
+import { verifySession } from "@/lib/cookie";
+import { cookies } from "next/headers";
 
 const app = new Hono()
   .post(
@@ -17,6 +19,12 @@ const app = new Hono()
     ),
     async (c) => {
       const { userId } = c.req.valid("json");
+
+      const session = cookies().get("session")?.value;
+      if (!session) return c.json({ error: "unauthorized!" }, 401);
+      const payload = await verifySession(session);
+      if (!payload) return c.json({ error: "unauthorized" }, 401);
+
       const data = await db.query.recipes.findMany({
         where: eq(recipes.authorId, userId),
 

@@ -25,7 +25,7 @@ interface RecipeProps {
 
 export const Recipe = ({ recipes, isLoading }: RecipeProps) => {
   return (
-    <div className="w-full mx-auto flex flex-col items-center justify-center  lg:grid lg:grid-cols-3 gap-10">
+    <div className="w-full mx-auto flex flex-col items-center justify-center lg:grid lg:grid-cols-3 gap-y-10">
       {isLoading && <Loader2 className="size-5 animate-spin" />}
       {!isLoading && recipes?.length === 0 && <p className="">no recipes</p>}
       {!isLoading &&

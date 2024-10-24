@@ -10,6 +10,8 @@ import { safeAction } from "@/actions/safe-action";
 import { CreateRecipeSchema } from "@/actions/create-recipe/schema";
 import { InputType, ReturnType } from "@/actions/create-recipe/types";
 import { FormSchema } from "@/actions/create-recipe/form-data-schema";
+import { cookies } from "next/headers";
+import { verifySession } from "@/lib/cookie";
 
 const handler = async (validateData: InputType): Promise<ReturnType> => {
   const { ings, userId, formData } = validateData;
@@ -22,6 +24,13 @@ const handler = async (validateData: InputType): Promise<ReturnType> => {
   const { desc, recipe, title } = parsedData.data;
 
   if (!userId) return { errors: "userId Missed!" };
+
+  const session = cookies().get("session")?.value;
+  if (!session) return { errors: "unauthorized" };
+
+  const payload = await verifySession(session);
+  if (payload?.userId !== userId)
+    return { errors: "You can only add recipe for your self" };
 
   let data;
   try {

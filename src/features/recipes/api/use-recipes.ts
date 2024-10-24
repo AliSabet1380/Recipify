@@ -5,6 +5,8 @@ import { client } from "@/lib/hono";
 export const useRecipes = (userId: string) => {
   const query = useQuery({
     enabled: !!userId,
+    gcTime: 0,
+    staleTime: 0,
     queryKey: ["own-recipes"],
     queryFn: async () => {
       const response = await client.api.recipes["own-recipes"].$post({
