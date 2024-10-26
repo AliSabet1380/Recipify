@@ -5,7 +5,7 @@ import { BellRing, Settings } from "lucide-react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { User } from "@/components/header/user";
 import { Separator } from "@/components/ui/separator";
-import { Loading } from "@/components/loading";
+import { Loading } from "@/components/ui-pages/loading";
 import {
   SidebarInset,
   SidebarProvider,
@@ -29,6 +29,7 @@ const Dashboard = ({
   if (!userLoading && !data) location.reload();
 
   const isAuthor = data?.id == userId[0];
+
   return (
     <SidebarProvider>
       <AppSidebar userid={userId[0]} />
@@ -52,7 +53,11 @@ const Dashboard = ({
             {isAuthor && <NewRecipe userId={userId[0]} />}
           </div>
           <div className="flex items-center justify-center mt-10 pb-20 px-4">
-            <Recipe recipes={recipes} isLoading={recipesLoading} />
+            <Recipe
+              isAuthor={isAuthor}
+              recipes={recipes}
+              isLoading={recipesLoading}
+            />
           </div>
         </div>
       </SidebarInset>

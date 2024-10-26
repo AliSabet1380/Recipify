@@ -7,7 +7,7 @@ export const useSingleRecipe = (recipeId: string) => {
     enabled: !!recipeId,
     gcTime: 0,
     staleTime: 0,
-    queryKey: ["single-recipe"],
+    queryKey: ["recipe"],
     queryFn: async () => {
       const response = await client.api.recipes.recipe[":recipeId"].$get({
         param: { recipeId },

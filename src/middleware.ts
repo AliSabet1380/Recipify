@@ -8,12 +8,17 @@ export const middleware = async (req: NextRequest) => {
   const path = req.nextUrl.pathname;
 
   const isPublic = publicRoutes.includes(path);
-  const isProtected = path.startsWith("/dashboard/");
+  const isRouteProtected = path.startsWith("/dashboard/");
+  const isApiProtected = path.startsWith("/api/recipes");
 
   const session = cookies().get("session")?.value;
   const decoded = await decrypt(session);
 
-  if (isProtected && !decoded?.userId)
+  if (isApiProtected && !decoded?.userId) {
+    return NextResponse.json({ error: "Invalid session!" });
+  }
+
+  if (isRouteProtected && !decoded?.userId)
     return NextResponse.redirect(new URL("/", req.nextUrl));
 
   if (isPublic && decoded?.userId)

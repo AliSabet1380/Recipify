@@ -7,7 +7,7 @@ export const useRecipes = (userId: string) => {
     enabled: !!userId,
     gcTime: 0,
     staleTime: 0,
-    queryKey: ["own-recipes"],
+    queryKey: ["recipes"],
     queryFn: async () => {
       const response = await client.api.recipes["recipes"][":userId"].$get({
         param: { userId },
