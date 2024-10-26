@@ -9,8 +9,8 @@ export const useRecipes = (userId: string) => {
     staleTime: 0,
     queryKey: ["own-recipes"],
     queryFn: async () => {
-      const response = await client.api.recipes["own-recipes"].$post({
-        json: { userId },
+      const response = await client.api.recipes["recipes"][":userId"].$get({
+        param: { userId },
       });
 
       if (!response.ok) throw new Error("Fail to fetch recipes");

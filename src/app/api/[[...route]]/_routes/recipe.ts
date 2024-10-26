@@ -9,16 +9,18 @@ import { verifySession } from "@/lib/cookie";
 import { cookies } from "next/headers";
 
 const app = new Hono()
-  .post(
-    "/own-recipes",
+  .get(
+    "/recipes/:userId",
     zValidator(
-      "json",
+      "param",
       z.object({
         userId: z.string(),
       })
     ),
     async (c) => {
-      const { userId } = c.req.valid("json");
+      const { userId } = c.req.valid("param");
+
+      if (!userId) return c.json({ error: "missing userId" }, 400);
 
       const session = cookies().get("session")?.value;
       if (!session) return c.json({ error: "unauthorized!" }, 401);
