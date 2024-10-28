@@ -25,7 +25,7 @@ export const NotFoundPage = () => {
           onClick={onGoBack}
           className="mt-4 px-6 py-3 bg-blue-500 hover:bg-blue-600 transition duration-200 ease-in-out transform hover:-translate-y-1"
         >
-          Go Back Home
+          Go Back
         </Button>
       </div>
     </div>

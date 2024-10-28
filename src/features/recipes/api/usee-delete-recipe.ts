@@ -35,7 +35,7 @@ export const useDeleteRecipe = () => {
         description: "Recipe deleted successfully",
       });
 
-      router.push("/dashboard", { scroll: true });
+      router.push(`/dashboard/${data.data.authorId}`, { scroll: true });
     },
     onError: (err) => {
       toast({
