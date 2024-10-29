@@ -1,17 +1,17 @@
 import { z } from "zod";
 import { Hono } from "hono";
 import { and, eq } from "drizzle-orm";
-import { cookies } from "next/headers";
 import { zValidator } from "@hono/zod-validator";
 
 import { db } from "@/db/drizzle";
 import { recipes } from "@/db/schema";
 
-import { verifySession } from "@/lib/cookie";
+import { validateUser } from "@/app/api/[[...route]]/_middleware/user";
 
 const app = new Hono()
   .get(
     "/recipes/:userId",
+    validateUser,
     zValidator(
       "param",
       z.object({
@@ -21,11 +21,6 @@ const app = new Hono()
     async (c) => {
       const { userId } = c.req.valid("param");
       if (!userId) return c.json({ error: "missing userId" }, 400);
-
-      const session = cookies().get("session")?.value;
-      if (!session) return c.json({ error: "unauthorized!" }, 401);
-      const payload = await verifySession(session);
-      if (!payload) return c.json({ error: "unauthorized" }, 401);
 
       const data = await db.query.recipes.findMany({
         where: eq(recipes.authorId, userId),
@@ -45,6 +40,7 @@ const app = new Hono()
   )
   .get(
     "/recipe/:recipeId",
+    validateUser,
     zValidator(
       "param",
       z.object({
@@ -55,10 +51,7 @@ const app = new Hono()
       const { recipeId } = c.req.valid("param");
       if (!recipeId) return c.json({ error: "recipe id missed!" }, 400);
 
-      const session = cookies().get("session")?.value;
-      if (!session) return c.json({ error: "unauhtorized!" }, 401);
-      const payload = await verifySession(session);
-      if (!payload?.userId) return c.json({ error: "invalid session!" }, 401);
+      const userId = c.get("userId");
 
       const data = await db.query.recipes.findFirst({
         where: eq(recipes.id, recipeId),
@@ -74,13 +67,14 @@ const app = new Hono()
       });
 
       if (!data) return c.json({ error: "not found!" }, 404);
-      const isAuthor = data.authorId === payload.userId;
+      const isAuthor = data.authorId === userId;
 
       return c.json({ data: { isAuthor, ...data } }, 200);
     }
   )
   .delete(
     "/recipe/:recipeId",
+    validateUser,
     zValidator(
       "param",
       z.object({
@@ -91,16 +85,11 @@ const app = new Hono()
       const { recipeId } = c.req.valid("param");
       if (!recipeId) return c.json({ error: "recipe id missing!" }, 400);
 
-      const session = cookies().get("session")?.value;
-      if (!session) return c.json({ error: "session missing!" }, 401);
-      const payload = await verifySession(session);
-      if (!payload) return c.json({ error: "invalid session" }, 401);
+      const userId = c.get("userId");
 
       const [data] = await db
         .delete(recipes)
-        .where(
-          and(eq(recipes.id, recipeId), eq(recipes.authorId, payload.userId))
-        )
+        .where(and(eq(recipes.id, recipeId), eq(recipes.authorId, userId)))
         .returning({
           authorId: recipes.authorId,
         });

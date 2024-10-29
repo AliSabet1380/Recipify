@@ -31,7 +31,7 @@ export const NewRecipeForm = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const { excute, isLoading } = useAction(createNewRecipe, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["own-recipes"] });
+      queryClient.invalidateQueries({ queryKey: ["recipes"] });
       toast({
         description: "recipe created",
       });

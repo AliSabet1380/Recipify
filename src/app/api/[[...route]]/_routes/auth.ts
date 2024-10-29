@@ -1,45 +1,37 @@
-import { cookies } from "next/headers";
 import { Hono } from "hono";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { zValidator } from "@hono/zod-validator";
 
 import { db } from "@/db/drizzle";
-import { InsertUserSchema, recipes, users } from "@/db/schema";
+import { InsertUserSchema, users } from "@/db/schema";
 
 import { coparePassword, createHashPassword } from "@/lib/bcrypt";
-import { createSession, deleteSession, verifySession } from "@/lib/cookie";
-import { NextResponse } from "next/server";
+import { createSession, deleteSession } from "@/lib/cookie";
+
+import { validateUser } from "@/app/api/[[...route]]/_middleware/user";
 
 const app = new Hono()
-  .get(
-    "/me",
+  .get("/me", validateUser, async (c) => {
+    const userId = c.get("userId");
 
-    async (c) => {
-      const session = cookies().get("session")?.value;
-      if (!session) return c.json({ error: "unauthorized" }, 401);
-
-      const payload = await verifySession(session);
-      if (!payload) return c.json({ error: "unauthorized" }, 401);
-
-      const data = await db.query.users.findFirst({
-        where: eq(users.id, payload.userId),
-        columns: {
-          avatar: true,
-          id: true,
-          createdAt: true,
-          email: true,
-          updatedAt: true,
-          username: true,
-        },
-      });
-      if (!data) {
-        await deleteSession();
-        return c.json({ error: "session not valid" }, 401);
-      }
-
-      return c.json({ data }, 200);
+    const data = await db.query.users.findFirst({
+      where: eq(users.id, userId),
+      columns: {
+        avatar: true,
+        id: true,
+        createdAt: true,
+        email: true,
+        updatedAt: true,
+        username: true,
+      },
+    });
+    if (!data) {
+      await deleteSession();
+      return c.json({ error: "session not valid" }, 401);
     }
-  )
+
+    return c.json({ data }, 200);
+  })
   .post(
     "/sign-up",
     zValidator(
@@ -106,4 +98,5 @@ const app = new Hono()
 
     return c.json({ data: null }, 200);
   });
+
 export default app;
