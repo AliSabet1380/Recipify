@@ -47,12 +47,14 @@ export const useConfirm = ({
   const ConfirmDialog = () => (
     <Dialog onOpenChange={onClose} open={promise !== null}>
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className="text-black">
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{desc}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button onClick={onCancle}>Cancle</Button>
+          <Button className="text-black" variant={"outline"} onClick={onCancle}>
+            Cancle
+          </Button>
           <Button onClick={onConfirm}>Confirm</Button>
         </DialogFooter>
       </DialogContent>
