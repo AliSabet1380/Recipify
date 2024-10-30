@@ -109,8 +109,9 @@ export const EditProfilePage = ({ user }: EditProfilePage) => {
 
         <div className="w-full space-y-4">
           <FormInput
+            label="Username"
             disabled={isLoading}
-            className="border-2"
+            className="border"
             placeholder={user.username}
             id="username"
           />
