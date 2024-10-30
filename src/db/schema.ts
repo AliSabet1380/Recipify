@@ -31,7 +31,7 @@ export const recipes = pgTable("recipes", {
   ings: text().array().notNull().default([]),
   authorId: uuid()
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   recipe: text().notNull(),
   coverImg: text().notNull().default("/no-cover.png"),
   createdAt: timestamp().notNull().defaultNow(),
