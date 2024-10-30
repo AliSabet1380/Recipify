@@ -9,6 +9,7 @@ import { coparePassword, createHashPassword } from "@/lib/bcrypt";
 import { createSession, deleteSession } from "@/lib/cookie";
 
 import { validateUser } from "@/app/api/[[...route]]/_middleware/user";
+import { deleteImage } from "@/lib/firebase";
 
 const app = new Hono()
   .get("/me", validateUser, async (c) => {
@@ -97,6 +98,24 @@ const app = new Hono()
     await deleteSession();
 
     return c.json({ data: null }, 200);
+  })
+  .delete("/delete", validateUser, async (c) => {
+    const userId = c.get("userId");
+
+    const [data] = await db
+      .delete(users)
+      .where(eq(users.id, userId))
+      .returning({
+        id: users.id,
+        avatar: users.avatar,
+      });
+
+    if (!data) return c.json({ error: "fail to delete user" }, 500);
+
+    await deleteSession();
+    if (data.avatar !== "/no-avatar.png") await deleteImage(data.avatar);
+
+    return c.json({ data }, 200);
   });
 
 export default app;

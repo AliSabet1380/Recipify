@@ -1,6 +1,7 @@
 "use clinet";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Eye, EyeClosed } from "lucide-react";
 import { ChangeEvent, ElementRef, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -13,7 +14,8 @@ import { FormButton } from "@/components/form/form-button";
 import { Button } from "@/components/ui/button";
 
 import { editProfile } from "@/actions/edit-profile";
-import { useRouter } from "next/navigation";
+
+import { useDeleteUser } from "@/features/auth/api/use-delete-user";
 
 interface EditProfilePage {
   user: {
@@ -31,6 +33,7 @@ export const EditProfilePage = ({ user }: EditProfilePage) => {
   const queryClient = useQueryClient();
   const fileInputRef = useRef<ElementRef<"input">>(null);
 
+  const { mutate, isPending } = useDeleteUser();
   const { isLoading, excute } = useAction(editProfile, {
     onSuccess: (data) => {
       console.log(data);
@@ -59,6 +62,10 @@ export const EditProfilePage = ({ user }: EditProfilePage) => {
   };
   const onAddOrChangeImage = () => {
     fileInputRef.current?.click();
+  };
+
+  const onDelete = () => {
+    mutate();
   };
 
   const onSubmit = (formData: FormData) => {
@@ -178,6 +185,15 @@ export const EditProfilePage = ({ user }: EditProfilePage) => {
           Edit Profile
         </FormButton>
       </form>
+
+      <Button
+        disabled={isPending}
+        className="w-full mt-2"
+        variant={"destructive"}
+        onClick={onDelete}
+      >
+        Delete User
+      </Button>
     </div>
   );
 };
