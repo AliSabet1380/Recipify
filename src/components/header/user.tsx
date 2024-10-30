@@ -59,7 +59,7 @@ export const User = ({ loaderColor = "white" }: UserProps) => {
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link
-                  href={"/edit-profile"}
+                  href={"/profile"}
                   className="w-full flex items-center justify-between"
                 >
                   <p>Profile</p>

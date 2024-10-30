@@ -7,6 +7,7 @@ import { db } from "@/db/drizzle";
 import { recipes } from "@/db/schema";
 
 import { validateUser } from "@/app/api/[[...route]]/_middleware/user";
+import { deleteImage } from "@/lib/firebase";
 
 const app = new Hono()
   .get(
@@ -92,8 +93,11 @@ const app = new Hono()
         .where(and(eq(recipes.id, recipeId), eq(recipes.authorId, userId)))
         .returning({
           authorId: recipes.authorId,
+          coverImg: recipes.coverImg,
         });
       if (!data) return c.json({ error: "Fail to delete recipe" }, 400);
+
+      deleteImage(data.coverImg);
 
       return c.json({ data }, 200);
     }

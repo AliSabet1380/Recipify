@@ -50,3 +50,4 @@ export const recipeRelations = relations(recipes, ({ one }) => ({
 export const InsertUserSchema = createInsertSchema(users);
 export const InsertRecipeSchema = createInsertSchema(recipes);
 export type Recipe = typeof recipes.$inferSelect;
+export type User = typeof users.$inferSelect;

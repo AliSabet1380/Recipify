@@ -39,12 +39,12 @@ export const FormInput = forwardRef<HTMLInputElement, Props>(
     const { pending } = useFormStatus();
 
     return (
-      <div className="w-full space-y-2">
+      <div className="w-full space-y-1">
         <div className="w-full space-y-1">
           {label && (
             <Label
               htmlFor={id}
-              className="text-xs font-semibold text-neutral-800"
+              className="text-sm font-semibold text-neutral-800"
             >
               {label}
             </Label>
