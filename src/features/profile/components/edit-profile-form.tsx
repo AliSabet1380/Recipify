@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { editProfile } from "@/actions/edit-profile";
 
 import { useDeleteUser } from "@/features/auth/api/use-delete-user";
+import { useConfirm } from "@/hooks/use-confirm";
 
 interface EditProfilePage {
   user: {
@@ -50,6 +51,10 @@ export const EditProfilePage = ({ user }: EditProfilePage) => {
     },
   });
 
+  const [ConfirmDialog, confirm] = useConfirm({
+    title: "Are you sure ?",
+    desc: "your going to delete your profile and all recipes",
+  });
   const [preview, setPreview] = useState<string | null>(null);
   const [showOldPassword, setShowOldPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
@@ -64,8 +69,9 @@ export const EditProfilePage = ({ user }: EditProfilePage) => {
     fileInputRef.current?.click();
   };
 
-  const onDelete = () => {
-    mutate();
+  const onDelete = async () => {
+    const ok = await confirm();
+    ok && mutate();
   };
 
   const onSubmit = (formData: FormData) => {
@@ -83,6 +89,7 @@ export const EditProfilePage = ({ user }: EditProfilePage) => {
 
   return (
     <div className="w-full h-full bg-white text-black p-5 border-2 shadow-md rounded-lg">
+      <ConfirmDialog />
       <h2 className="text-start text-xl font-medium">Edit Profile</h2>
       <form
         action={onSubmit}
