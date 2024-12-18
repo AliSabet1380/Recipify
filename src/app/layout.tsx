@@ -20,8 +20,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal?: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -29,7 +31,10 @@ export default function RootLayout({
         className={`${nunito.className} antialiased bg-zinc-900 text-white`}
       >
         <Toaster />
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          {children}
+          {modal}
+        </QueryProvider>
       </body>
     </html>
   );

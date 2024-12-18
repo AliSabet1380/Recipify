@@ -29,9 +29,14 @@ export type SigninFormValues = z.infer<typeof FormSchema>;
 interface SigninFormProps {
   onSubmit: (values: SigninFormValues) => void;
   disabled?: boolean;
+  lightBorder?: boolean;
 }
 
-export const SigninForm = ({ onSubmit, disabled }: SigninFormProps) => {
+export const SigninForm = ({
+  onSubmit,
+  disabled,
+  lightBorder,
+}: SigninFormProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const form = useForm<SigninFormValues>({
     resolver: zodResolver(FormSchema),
@@ -46,7 +51,9 @@ export const SigninForm = ({ onSubmit, disabled }: SigninFormProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col justify-evenly space-y-7 p-5 w-full h-full border-2 border-zinc-100 shadow-lg rounded-lg"
+        className={`flex flex-col space-y-7 p-5 w-full h-full border-2 ${
+          lightBorder ? "border-zinc-100" : "border-zinc-300"
+        } shadow-lg rounded-lg`}
       >
         <h2 className="text-xl font-semibold">Sign in</h2>
         <div className="w-full flex flex-col items-center  space-y-3 ">
